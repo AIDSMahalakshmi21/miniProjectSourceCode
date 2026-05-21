@@ -104,7 +104,7 @@ void updateRecord(FILE *fPtr)
 
     // obtain number of account to update
     printf("%s", "Enter account to update ( 1 - 100 ): ");
-    scanf("%d", &account);
+    scanf("%u", &account);
 
     // move file pointer to correct record in file
     // Palaya forward seek eduthutu, intha backward seek line-ah replace pannunga:
