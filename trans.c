@@ -146,12 +146,12 @@ void deleteRecord(FILE *fPtr)
 
     // obtain number of account to delete
     printf("%s", "Enter account number to delete ( 1 - 100 ): ");
-    scanf("%d", &accountNum);
+    scanf("%u", &accountNum);
 
-    // move file pointer to correct record in file
-    fseek(fPtr, (accountNum - 1) * sizeof(struct clientData), SEEK_SET);
-    // read record from file
-    fread(&client, sizeof(struct clientData), 1, fPtr);
+    // FIX: Move BACKWARDS 1 record size to hit the same account slot
+    fseek(fPtr, -(long)sizeof(struct clientData), SEEK_CUR);
+    fwrite(&client, sizeof(struct clientData), 1, fPtr);
+    fflush(fPtr); // Immediately flush stream data to storage
     // display error if record does not exist
     if (client.acctNum == 0)
     {
@@ -175,7 +175,7 @@ void newRecord(FILE *fPtr)
 
     // obtain number of account to create
     printf("%s", "Enter new account number ( 1 - 100 ): ");
-    scanf("%d", &accountNum);
+    scanf("%u", &accountNum);
 
     // move file pointer to correct record in file
     fseek(fPtr, (accountNum - 1) * sizeof(struct clientData), SEEK_SET);
