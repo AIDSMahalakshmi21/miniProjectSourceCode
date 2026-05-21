@@ -217,6 +217,9 @@ unsigned int enterChoice(void)
        "=============================\n"
        "Enter Choice: ");
 
-    scanf("%u", &menuChoice); // receive choice from user
+    if (scanf("%u", &menuChoice) != 1) {
+    while (getchar() != '\n'); // Clean garbage input
+    return 0;
+    }
     return menuChoice;
 } // end function enterChoice
