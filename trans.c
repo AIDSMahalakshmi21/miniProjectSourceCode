@@ -110,7 +110,10 @@ void updateRecord(FILE *fPtr)
     scanf("%d", &account);
 
     // move file pointer to correct record in file
-    fseek(fPtr, (account - 1) * sizeof(struct clientData), SEEK_SET);
+    // Palaya forward seek eduthutu, intha backward seek line-ah replace pannunga:
+    fseek(fPtr, -(long)sizeof(struct clientData), SEEK_CUR); 
+    fwrite(&client, sizeof(struct clientData), 1, fPtr);
+    fflush(fPtr);
     // read record from file
     fread(&client, sizeof(struct clientData), 1, fPtr);
     // display error if account does not exist
